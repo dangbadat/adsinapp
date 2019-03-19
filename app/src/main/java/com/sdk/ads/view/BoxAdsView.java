@@ -61,7 +61,7 @@ public class BoxAdsView extends ImageView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (ready && event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             AdsManager.getInstance().openMarket(context);
         }
         return true;
