@@ -103,10 +103,10 @@ public class AdsManager {
         return instance;
     }
 
-    public void showAdmobFullScreen(Context context, int times) {
+    public void showAdmobFullScreen(Context context, String key, int times) {
         String fullId = tinyDB.getString(ADMOB_FULL_SCREEN_ID);
         if (!fullId.equals("")) {
-            AdMobManager.getInstance().fullscreenAdmobShow(context, fullId, times);
+            AdMobManager.getInstance().fullscreenAdmobShow(context, fullId, key, times);
         }
     }
 
@@ -126,21 +126,19 @@ public class AdsManager {
 
     public void openMarket(Context context) {
         if (isShowAdsMore) {
-            Log.d("datdb", "openMarket");
             Intent intent = new Intent(context, MoreAppActivity.class);
             context.startActivity(intent);
         }
     }
 
-    public void showAdsFullScreen(Activity context, int times) {
+    public void showAdsFullScreen(Activity context, String key, int times) {
         if (MethodUtils.isNetworkConnected(context)) {
-            Log.d("datdb", "show full: " + appFulls.size());
-            timesFull = tinyDB.getInt(TIMES_SHOW_FULL, 0);
+            timesFull = tinyDB.getInt(TIMES_SHOW_FULL + "_" + key, 0);
             boolean show = timesFull % (times + 1) == 0;
             if (appFulls.size() > 0 && (times == 0 || show)) {
                 context.startActivity(new Intent(context, FullScreenAds.class));
             }
-            tinyDB.putInt(TIMES_SHOW_FULL, timesFull + 1);
+            tinyDB.putInt(TIMES_SHOW_FULL + "_" + key, timesFull + 1);
         }
     }
 
@@ -159,15 +157,15 @@ public class AdsManager {
 //    }
 
 
-    public void showAdsNativeDialog(Activity context, int times) {
+    public void showAdsNativeDialog(Activity context, String key, int times) {
         if (MethodUtils.isNetworkConnected(context)) {
-            timesNative = tinyDB.getInt(TIMES_SHOW_NATIVE, 0);
+            timesNative = tinyDB.getInt(TIMES_SHOW_NATIVE + "_" + key, 0);
             boolean show = timesNative % (times + 1) == 0;
             if (appNatives.size() > 0 && (times == 0 || show)) {
                 NativeAds nativeAds = new NativeAds(context);
                 nativeAds.show();
             }
-            tinyDB.putInt(TIMES_SHOW_NATIVE, timesNative + 1);
+            tinyDB.putInt(TIMES_SHOW_NATIVE + "_" + key, timesNative + 1);
         }
     }
 

@@ -30,8 +30,8 @@ public class AdMobManager {
         return instance;
     }
 
-    public void fullscreenAdmobShow(Context context, String unitId, int times) {
-        int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB, 0);
+    public void fullscreenAdmobShow(Context context, String unitId, String key, int times) {
+        int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
         boolean show = count % (times + 1) == 0;
         if (times == 0 || show) {
             final InterstitialAd interstitialAd = new InterstitialAd(context);
@@ -76,7 +76,7 @@ public class AdMobManager {
                 }
             });
         }
-        tinyDB.putInt(TIMES_SHOW_FULL_ADMOB, count + 1);
+        tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
     }
 
     public void bannerAdmobSetup(final Context context, final BannerAdmobView bannerAdmobView,
