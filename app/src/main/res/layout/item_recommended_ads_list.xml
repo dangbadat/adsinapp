@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <com.sdk.ads.view.SquareHImageView
-        android:id="@+id/iconApp"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitCenter" />
+        app:layout_constraintBottom_toTopOf="@+id/titleApp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.sdk.ads.view.SquareHImageView
+            android:id="@+id/iconApp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/titleApp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:textSize="10sp" />
-</LinearLayout>
+        android:text="dangbadat"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/img"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
