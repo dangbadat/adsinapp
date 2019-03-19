@@ -9,10 +9,11 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/recommended_for_you"
-        android:textSize="13sp" />
+        android:textSize="11sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcvAds"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </merge>

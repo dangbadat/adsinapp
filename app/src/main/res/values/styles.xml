@@ -1,13 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/enter_from_bot</item>
         <item name="android:windowExitAnimation">@anim/exit_to_bot</item>

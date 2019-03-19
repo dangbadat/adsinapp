@@ -36,7 +36,12 @@ public class DialogSuggest extends Dialog {
 
     public DialogSuggest(@NonNull Context context) {
         super(context);
-        init(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_suggest);
+        setCancelable(true);
+        setCanceledOnTouchOutside(true);
+        this.context = context;
+        init();
     }
 
     @Override
@@ -60,14 +65,7 @@ public class DialogSuggest extends Dialog {
         return false;
     }
 
-    private void init(Context context) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_suggest);
-        setCancelable(true);
-        setCanceledOnTouchOutside(true);
-
-        this.context = context;
-
+    private void init() {
         appInfos = AdsManager.getInstance().getAppOnBackpress();
         exit = findViewById(R.id.exit);
         cancel = findViewById(R.id.cancel);

@@ -50,7 +50,7 @@ public class RecommendedAdsListAdapter extends RecyclerView.Adapter<RecommendedA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final AppInfo appInfo = appInfos.get(i);
-        Glide.with(context).load(appInfo.getIcon()).into(viewHolder.iconApp);
+        Glide.with(context).load(appInfo.getIcon()).fitCenter().into(viewHolder.iconApp);
         viewHolder.titleApp.setText(appInfo.getTitle());
         viewHolder.titleApp.setTextColor(colorText);
 
