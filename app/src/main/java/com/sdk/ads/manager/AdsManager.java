@@ -125,7 +125,7 @@ public class AdsManager {
     }
 
     public void openMarket(Context context) {
-        if (isShowAdsMore) {
+        if (isShowAdsMore && appInfos.size() > 0) {
             Intent intent = new Intent(context, MoreAppActivity.class);
             context.startActivity(intent);
         }

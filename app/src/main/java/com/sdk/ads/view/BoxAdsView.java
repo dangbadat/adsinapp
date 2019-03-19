@@ -47,7 +47,7 @@ public class BoxAdsView extends ImageView {
             animationDrawable.setExitFadeDuration(1000);
             animationDrawable.start();
         }
-        setShow(context, false);
+//        setShow(context, false);
         LocalBroadcastManager.getInstance(context).registerReceiver(adsLoaded, new IntentFilter(AdsManager.ACTION_ADS_LOADED));
     }
 
@@ -62,7 +62,6 @@ public class BoxAdsView extends ImageView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (ready && event.getAction() == MotionEvent.ACTION_DOWN) {
-            Log.d("datdb", "action dowm");
             AdsManager.getInstance().openMarket(context);
         }
         return true;
@@ -78,8 +77,7 @@ public class BoxAdsView extends ImageView {
     private BroadcastReceiver adsLoaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("datdb", "BoxAdsView");
-            setShow(context, true);
+//            setShow(context, true);
         }
     };
 }

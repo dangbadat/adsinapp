@@ -46,7 +46,6 @@ public class RequestToServer extends AsyncTask<Void, Void, Boolean> {
         }
 
         json = response.toString();
-        Log.d("datdb", "json: " + json);
         return AdsManager.getInstance().parseAdsModel(json, true);
     }
 
