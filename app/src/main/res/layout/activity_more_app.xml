@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/backPress"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:padding="15dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/more_app"
+            android:textColor="@color/textColorTitle"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/developer"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_playstore"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/colorBackgroundActivityAds"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rltTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/coverMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/colorBackgroundAd"
+                    android:padding="2dp"
+                    android:text="@string/ad"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:id="@+id/iconMain"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/coverMain"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignTop="@+id/iconMain"
+                    android:layout_alignBottom="@+id/iconMain"
+                    android:layout_toRightOf="@+id/iconMain"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iconMain"
+                        android:layout_toRightOf="@+id/iconMain"
+                        android:paddingLeft="10dp"
+                        android:text="Title"
+                        android:textColor="@color/textColorTitle"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/shortDesMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleMain"
+                        android:layout_toRightOf="@+id/iconMain"
+                        android:lines="2"
+                        android:maxLines="2"
+                        android:paddingLeft="10dp"
+                        android:text="Short Des"
+                        android:textColor="@color/textColorDes"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/installMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconMain"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/colorButtonInstall"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/install_now"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRecommended"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/recommended_for_you"
+                    android:textColor="@color/textColorTitle"
+                    android:textSize="13sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcvRecommended"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/tvMaylike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/you_may_like"
+                    android:textColor="@color/textColorTitle"
+                    android:textSize="13sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcvYouMayLike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:padding="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/shadow_toolbar" />
+</RelativeLayout>

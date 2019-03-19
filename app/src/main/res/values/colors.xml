@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="textColorTitle">#000000</color>
+    <color name="textColorDes">#333333</color>
+    <color name="colorButtonInstall">#62A243</color>
+    <color name="colorBackgroundAd">#FFC107</color>
+    <color name="colorBackgroundActivityAds">#EBEBEB</color>
+    <color name="aa">#80000000</color>
+    <color name="colorBackgroundNative">#33000000</color>
+</resources>
