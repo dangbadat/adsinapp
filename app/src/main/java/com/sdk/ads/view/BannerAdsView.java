@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.sdk.ads.glide.Glide;
 import com.sdk.ads.R;
 import com.sdk.ads.manager.AdsManager;
 import com.sdk.ads.model.AppInfo;

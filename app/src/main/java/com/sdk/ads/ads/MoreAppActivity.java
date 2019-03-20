@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.sdk.ads.glide.Glide;
 import com.sdk.ads.R;
 import com.sdk.ads.adapter.MayLikeAdapter;
 import com.sdk.ads.adapter.RecommendAdapter;

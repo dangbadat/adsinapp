@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.sdk.ads.glide.Glide;
 import com.sdk.ads.R;
 import com.sdk.ads.adapter.ScreenShotAdapter;
 import com.sdk.ads.manager.AdsManager;

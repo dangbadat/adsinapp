@@ -8,6 +8,5 @@
     <color name="colorButtonInstall">#62A243</color>
     <color name="colorBackgroundAd">#FFC107</color>
     <color name="colorBackgroundActivityAds">#EBEBEB</color>
-    <color name="aa">#80000000</color>
     <color name="colorBackgroundNative">#33000000</color>
 </resources>
