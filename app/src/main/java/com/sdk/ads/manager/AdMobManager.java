@@ -105,64 +105,22 @@ public class AdMobManager {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        showAds(key, count);
+                        showAds();
                     }
                 }, 1000);
             } else {
-                showAds(key, count);
+                showAds();
             }
-
-//            interstitialAd = new InterstitialAd(context);
-//            interstitialAd.setAdUnitId(unitId);
-//            AdRequest adRequest = new AdRequest.Builder().build();
-//            interstitialAd.loadAd(adRequest);
-//
-//            interstitialAd.setAdListener(new AdListener() {
-//                @Override
-//                public void onAdLoaded() {
-//                    interstitialAd.show();
-//                }
-//
-//                @Override
-//                public void onAdFailedToLoad(int i) {
-//                    super.onAdFailedToLoad(i);
-//                }
-//
-//                @Override
-//                public void onAdOpened() {
-//                    super.onAdOpened();
-//                }
-//
-//                @Override
-//                public void onAdClicked() {
-//                    super.onAdClicked();
-//                }
-//
-//                @Override
-//                public void onAdClosed() {
-//                    super.onAdClosed();
-//                }
-//
-//                @Override
-//                public void onAdImpression() {
-//                    super.onAdImpression();
-//                }
-//
-//                @Override
-//                public void onAdLeftApplication() {
-//                    super.onAdLeftApplication();
-//                }
-//            });
         } else if (interstitialAd != null && !interstitialAd.isLoaded()) {
             requestAdsFullScreen();
         } else if (interstitialAd == null) {
             requestAdsFullScreen();
         }
+        tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
     }
 
-    private void showAds(String key, int count) {
+    private void showAds() {
         interstitialAd.show();
-        tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
         requestAdsFullScreen();
     }
 
