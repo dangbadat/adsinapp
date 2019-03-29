@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.sdk.ads.R;
 import com.sdk.ads.ads.FullScreenAds;
 import com.sdk.ads.ads.MoreAppActivity;
 import com.sdk.ads.ads.NativeAds;
@@ -91,7 +92,16 @@ public class AdsManager {
 
     public static void initAdmob(Context context) {
         String admobId = tinyDB.getString(ADMOB_APP_ID);
+        String admobIDInApp = context.getResources().getString(R.string.admob_app_id);
+
+        String appID = "";
         if (!admobId.equals("")) {
+            appID = admobId;
+        } else if (!admobIDInApp.equals("")) {
+            appID = admobIDInApp;
+        }
+
+        if (!appID.equals("")) {
             AdMobManager.init(context, tinyDB.getString(ADMOB_APP_ID));
         }
     }
@@ -103,17 +113,23 @@ public class AdsManager {
         return instance;
     }
 
-    public void showAdmobFullScreen(Context context, String key, int times) {
-        String fullId = tinyDB.getString(ADMOB_FULL_SCREEN_ID);
-        if (!fullId.equals("")) {
-            AdMobManager.getInstance().fullscreenAdmobShow(context, fullId, key, times);
-        }
+    public void showAdmobFullScreen(boolean showDialog, String messDialog, String key, int times) {
+        AdMobManager.getInstance().fullscreenAdmobShow(showDialog, messDialog, key, times);
     }
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {
         String bannerId = tinyDB.getString(ADMOB_BANNER_ID);
+        String bannerIdInApp = context.getResources().getString(R.string.abmob_banner_id);
+
+        String id = "";
         if (!bannerId.equals("")) {
-            AdMobManager.getInstance().bannerAdmobSetup(context, bannerAdmobView, bannerId);
+            id = bannerId;
+        } else if (!bannerIdInApp.equals("")) {
+            id = bannerIdInApp;
+        }
+
+        if (!id.equals("")) {
+            AdMobManager.getInstance().bannerAdmobSetup(context, bannerAdmobView, id);
         }
     }
 
