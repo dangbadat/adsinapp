@@ -120,8 +120,8 @@ public class AdsManager {
         return instance;
     }
 
-    public void showAdmobFullScreen(Context context, boolean showDialog, String messDialog, String key, int times) {
-        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times);
+    public void showAdmobFullScreen(Context context, boolean showDialog, String messDialog, String key, int times, AdMobManager.OnAdInterstitialAdListener listener) {
+        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times, listener);
     }
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {

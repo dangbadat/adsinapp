@@ -63,21 +63,10 @@ public class AdMobManager {
             interstitialAd.setAdUnitId(id);
             AdRequest adRequest = new AdRequest.Builder().build();
             interstitialAd.loadAd(adRequest);
-            interstitialAd.setAdListener(new AdListener() {
-
-                @Override
-                public void onAdClosed() {
-                    if (dialogLoadAds != null && dialogLoadAds.isShowing()) {
-                        dialogLoadAds.dismiss();
-                        dialogLoadAds = null;
-                    }
-                    super.onAdClosed();
-                }
-            });
         }
     }
 
-    public void fullscreenAdmobShow(Context context, boolean isShowDialog, String messDialog, final String key, int times) {
+    public void fullscreenAdmobShow(Context context, boolean isShowDialog, String messDialog, final String key, int times, final OnAdInterstitialAdListener listener) {
         final int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
         boolean show = count % (times + 1) == 0;
         if ((times == 0 || show) && interstitialAd != null && interstitialAd.isLoaded()) {
@@ -93,11 +82,11 @@ public class AdMobManager {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        showAds();
+                        showAds(listener);
                     }
                 }, 1000);
             } else {
-                showAds();
+                showAds(listener);
             }
         } else if (interstitialAd != null && !interstitialAd.isLoaded()) {
             requestAdsFullScreen();
@@ -107,8 +96,31 @@ public class AdMobManager {
         tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
     }
 
-    private void showAds() {
+    private void showAds(final OnAdInterstitialAdListener listener) {
         interstitialAd.show();
+
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdOpened() {
+                if (listener != null) {
+                    listener.onAdOpen();
+                }
+                super.onAdOpened();
+            }
+
+            @Override
+            public void onAdClosed() {
+                if (dialogLoadAds != null && dialogLoadAds.isShowing()) {
+                    dialogLoadAds.dismiss();
+                    dialogLoadAds = null;
+                }
+                if (listener != null) {
+                    listener.onAdClose();
+                }
+                super.onAdClosed();
+            }
+        });
+
         requestAdsFullScreen();
     }
 
@@ -124,42 +136,6 @@ public class AdMobManager {
 
                 AdRequest adRequest = new AdRequest.Builder().build();
                 adView.loadAd(adRequest);
-                adView.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        super.onAdLoaded();
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(int i) {
-                        super.onAdFailedToLoad(i);
-                    }
-
-                    @Override
-                    public void onAdOpened() {
-                        super.onAdOpened();
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-                        super.onAdClicked();
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                    }
-
-                    @Override
-                    public void onAdImpression() {
-                        super.onAdImpression();
-                    }
-
-                    @Override
-                    public void onAdLeftApplication() {
-                        super.onAdLeftApplication();
-                    }
-                });
             }
         });
     }
@@ -169,41 +145,11 @@ public class AdMobManager {
         adView.setAdSize(adSize);
         adView.setAdUnitId(unitId);
         adView.loadAd(adRequest);
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-            }
+    }
 
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-            }
+    public interface OnAdInterstitialAdListener {
+        void onAdOpen();
 
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdClicked() {
-                super.onAdClicked();
-            }
-
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdImpression() {
-                super.onAdImpression();
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-        });
+        void onAdClose();
     }
 }
