@@ -9,8 +9,8 @@
     <string name="exit">EXIT</string>
     <string name="cancel">CANCEL</string>
 
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="abmob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="abmob_full_id">	ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_app_id"></string>
+    <string name="abmob_banner_id"></string>
+    <string name="abmob_full_id"></string>
     <string name="loading_ads">Loading ads...</string>
 </resources>

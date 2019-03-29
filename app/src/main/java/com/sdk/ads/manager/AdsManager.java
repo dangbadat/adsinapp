@@ -92,7 +92,14 @@ public class AdsManager {
 
     public static void initAdmob(Context context) {
         String admobId = tinyDB.getString(ADMOB_APP_ID);
-        String admobIDInApp = context.getResources().getString(R.string.admob_app_id);
+
+
+        String admobIDInApp = "";
+        try {
+            admobIDInApp = context.getResources().getString(R.string.admob_app_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String appID = "";
         if (!admobId.equals("")) {
@@ -119,7 +126,13 @@ public class AdsManager {
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {
         String bannerId = tinyDB.getString(ADMOB_BANNER_ID);
-        String bannerIdInApp = context.getResources().getString(R.string.abmob_banner_id);
+
+        String bannerIdInApp = "";
+        try {
+            bannerIdInApp = context.getResources().getString(R.string.abmob_banner_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String id = "";
         if (!bannerId.equals("")) {

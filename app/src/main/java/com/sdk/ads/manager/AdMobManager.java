@@ -46,7 +46,13 @@ public class AdMobManager {
 
     private static void requestAdsFullScreen() {
         String fullId = tinyDB.getString(AdsManager.ADMOB_FULL_SCREEN_ID);
-        String fullIDInApp = context.getResources().getString(R.string.abmob_full_id);
+        String fullIDInApp = "";
+
+        try {
+            fullIDInApp = context.getResources().getString(R.string.abmob_full_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String id = "";
         if (!fullId.equals("")) {
