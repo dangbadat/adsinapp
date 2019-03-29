@@ -33,18 +33,14 @@
 -optimizations !code/simplification/arithmetic
 -keepattributes *Annotation*
 #Giữ lại class
--keep class com.sdk.ads.manager.AdsManager { *; }
--keep class com.sdk.ads.manager.AdMobManager { *; }
--keep class com.sdk.ads.ads.DialogSuggest { *; }
--keep class com.sdk.ads.ads.NativeAds { *; }
+-keep class com.sdk.ads.manager.** { *; }
+-keep class com.sdk.ads.ads.** { *; }
 
 -keep public class * extends android.app.Activity
--keep public class * extends android.app.Dialog
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
-#-keep public class * extends android.content.ContentProvider
-#-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.content.ContentProvider
 -keep public class * extends android.view.View {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
