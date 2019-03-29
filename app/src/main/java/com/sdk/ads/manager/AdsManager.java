@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.sdk.ads.R;
 import com.sdk.ads.ads.FullScreenAds;
@@ -119,8 +120,8 @@ public class AdsManager {
         return instance;
     }
 
-    public void showAdmobFullScreen(boolean showDialog, String messDialog, String key, int times) {
-        AdMobManager.getInstance().fullscreenAdmobShow(showDialog, messDialog, key, times);
+    public void showAdmobFullScreen(Context context, boolean showDialog, String messDialog, String key, int times) {
+        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times);
     }
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {

@@ -3,6 +3,7 @@ package com.sdk.ads.manager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import com.sdk.ads.R;
 import com.sdk.ads.utils.TinyDB;
@@ -30,9 +31,6 @@ public class AdMobManager {
         context = ctx;
         MobileAds.initialize(context, appId);
         tinyDB = new TinyDB(context);
-        dialogLoadAds = new ProgressDialog(context);
-        dialogLoadAds.setCancelable(false);
-        dialogLoadAds.setCanceledOnTouchOutside(false);
         requestAdsFullScreen();
     }
 
@@ -66,38 +64,28 @@ public class AdMobManager {
             AdRequest adRequest = new AdRequest.Builder().build();
             interstitialAd.loadAd(adRequest);
             interstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdOpened() {
-                    super.onAdOpened();
-                }
 
                 @Override
                 public void onAdClosed() {
                     if (dialogLoadAds != null && dialogLoadAds.isShowing()) {
                         dialogLoadAds.dismiss();
+                        dialogLoadAds = null;
                     }
                     super.onAdClosed();
-                }
-
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                }
-
-                @Override
-                public void onAdFailedToLoad(int i) {
-                    super.onAdFailedToLoad(i);
                 }
             });
         }
     }
 
-    public void fullscreenAdmobShow(boolean isShowDialog, String messDialog, final String key, int times) {
+    public void fullscreenAdmobShow(Context context, boolean isShowDialog, String messDialog, final String key, int times) {
         final int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
         boolean show = count % (times + 1) == 0;
         if ((times == 0 || show) && interstitialAd != null && interstitialAd.isLoaded()) {
 
             if (isShowDialog) {
+                dialogLoadAds = new ProgressDialog(context);
+                dialogLoadAds.setCancelable(false);
+                dialogLoadAds.setCanceledOnTouchOutside(false);
                 dialogLoadAds.setMessage(messDialog);
                 dialogLoadAds.show();
 
