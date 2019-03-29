@@ -3,7 +3,6 @@ package com.sdk.ads.manager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.sdk.ads.R;
 import com.sdk.ads.utils.TinyDB;
@@ -61,7 +60,6 @@ public class AdMobManager {
             id = fullIDInApp;
         }
 
-        Log.d("datdb", "fullID: " + id);
         if (!id.equals("")) {
             interstitialAd = new InterstitialAd(context);
             interstitialAd.setAdUnitId(id);
@@ -70,13 +68,11 @@ public class AdMobManager {
             interstitialAd.setAdListener(new AdListener() {
                 @Override
                 public void onAdOpened() {
-                    Log.d("datdb", "onAdOpened");
                     super.onAdOpened();
                 }
 
                 @Override
                 public void onAdClosed() {
-                    Log.d("datdb", "onAdClosed");
                     if (dialogLoadAds != null && dialogLoadAds.isShowing()) {
                         dialogLoadAds.dismiss();
                     }
@@ -85,13 +81,11 @@ public class AdMobManager {
 
                 @Override
                 public void onAdLoaded() {
-                    Log.d("datdb", "onAdLoaded");
                     super.onAdLoaded();
                 }
 
                 @Override
                 public void onAdFailedToLoad(int i) {
-                    Log.d("datdb", "onAdFailedToLoad: " + i);
                     super.onAdFailedToLoad(i);
                 }
             });
