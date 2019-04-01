@@ -70,7 +70,7 @@ public class AdMobManager {
         int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
         boolean show = count % (times + 1) == 0;
         if (interstitialAd != null) {
-            if ((times == 0 || show) && interstitialAd.isLoaded()) {
+            if ((times == 0 || show) && count >= 1 && interstitialAd.isLoaded()) {
                 if (isShowDialog) {
                     dialogLoadAds = new ProgressDialog(context);
                     dialogLoadAds.setCancelable(false);
