@@ -67,31 +67,42 @@ public class AdMobManager {
     }
 
     public void fullscreenAdmobShow(Context context, boolean isShowDialog, String messDialog, final String key, int times, final OnAdInterstitialAdListener listener) {
-        final int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
+        int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
         boolean show = count % (times + 1) == 0;
-        if ((times == 0 || show) && interstitialAd != null && interstitialAd.isLoaded()) {
+        if (interstitialAd != null) {
+            if ((times == 0 || show) && interstitialAd.isLoaded()) {
+                if (isShowDialog) {
+                    dialogLoadAds = new ProgressDialog(context);
+                    dialogLoadAds.setCancelable(false);
+                    dialogLoadAds.setCanceledOnTouchOutside(false);
+                    dialogLoadAds.setMessage(messDialog);
+                    dialogLoadAds.show();
 
-            if (isShowDialog) {
-                dialogLoadAds = new ProgressDialog(context);
-                dialogLoadAds.setCancelable(false);
-                dialogLoadAds.setCanceledOnTouchOutside(false);
-                dialogLoadAds.setMessage(messDialog);
-                dialogLoadAds.show();
-
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showAds(listener);
-                    }
-                }, 1000);
+                    handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showAds(listener);
+                        }
+                    }, 1000);
+                } else {
+                    showAds(listener);
+                }
+            } else if (!interstitialAd.isLoaded()) {
+                requestAdsFullScreen();
+                if (listener != null) {
+                    listener.onNotShowAd();
+                }
             } else {
-                showAds(listener);
+                if (listener != null) {
+                    listener.onNotShowAd();
+                }
             }
-        } else if (interstitialAd != null && !interstitialAd.isLoaded()) {
+        } else {
             requestAdsFullScreen();
-        } else if (interstitialAd == null) {
-            requestAdsFullScreen();
+            if (listener != null) {
+                listener.onNotShowAd();
+            }
         }
         tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
     }
@@ -118,6 +129,23 @@ public class AdMobManager {
                     listener.onAdClose();
                 }
                 super.onAdClosed();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                if (dialogLoadAds != null && dialogLoadAds.isShowing()) {
+                    dialogLoadAds.dismiss();
+                    dialogLoadAds = null;
+                }
+                if (listener != null) {
+                    listener.onNotShowAd();
+                }
+                super.onAdFailedToLoad(i);
             }
         });
 
@@ -151,5 +179,7 @@ public class AdMobManager {
         void onAdOpen();
 
         void onAdClose();
+
+        void onNotShowAd();
     }
 }
