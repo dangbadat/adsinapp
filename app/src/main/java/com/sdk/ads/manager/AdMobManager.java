@@ -202,21 +202,31 @@ public class AdMobManager {
                 public void onAdFailedToLoad(int i) {
                     dialogLoadAds.dismiss();
                     if (onAdInterstitialAdListener != null) {
-                        onAdInterstitialAdListener.doSomething();
+                        onAdInterstitialAdListener.onFailedToLoad();
                     }
                 }
 
                 @Override
                 public void onAdLoaded() {
                     dialogLoadAds.dismiss();
-
-                    if (onAdInterstitialAdListener != null) {
-                        onAdInterstitialAdListener.doSomething();
-                    }
                     tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
                     interstitialAd.show();
+                    if (onAdInterstitialAdListener != null) {
+                        onAdInterstitialAdListener.onOpen();
+                    }
+                }
+
+                @Override
+                public void onAdClosed() {
+                    if (onAdInterstitialAdListener != null) {
+                        onAdInterstitialAdListener.onClose();
+                    }
                 }
             });
+        } else { // không hiển thị quảng cáo
+            if (onAdInterstitialAdListener != null) {
+                onAdInterstitialAdListener.onFailedToLoad();
+            }
         }
     }
 
@@ -248,7 +258,11 @@ public class AdMobManager {
     }
 
     public interface OnAdInterstitialAdListener {
-        void doSomething();
+        void onOpen();
+
+        void onClose();
+
+        void onFailedToLoad();
     }
 
 //    public interface OnAdInterstitialAdListener {
