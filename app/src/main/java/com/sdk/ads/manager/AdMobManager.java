@@ -168,52 +168,56 @@ public class AdMobManager {
 //        requestAdsFullScreen();
 //    }
 
-    public void fullscreenAdmobShow(Context context, final OnAdInterstitialAdListener onAdInterstitialAdListener) {
-        final ProgressDialog dialogLoadAds = new ProgressDialog(context);
-        dialogLoadAds.setCancelable(false);
-        dialogLoadAds.setCanceledOnTouchOutside(false);
-        dialogLoadAds.setMessage("Ad Loading...");
-        dialogLoadAds.show();
+    public void fullscreenAdmobShow(Context context, final String key, int times, final OnAdInterstitialAdListener onAdInterstitialAdListener) {
+        final int count = tinyDB.getInt(TIMES_SHOW_FULL_ADMOB + "_" + key, 0);
+        boolean show = count % (times + 1) == 0;
+        if ((times == 0 || show) && count >= 1) {
+            final ProgressDialog dialogLoadAds = new ProgressDialog(context);
+            dialogLoadAds.setCancelable(false);
+            dialogLoadAds.setCanceledOnTouchOutside(false);
+            dialogLoadAds.setMessage("Ad Loading...");
+            dialogLoadAds.show();
 
-        String fullId = tinyDB.getString(AdsManager.ADMOB_FULL_SCREEN_ID);
-        String fullIDInApp = "";
-        try {
-            fullIDInApp = context.getResources().getString(R.string.abmob_full_id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String unitID = "";
-        if (!fullId.equals("")) {  // ưu tiên lấy id server trả về
-            unitID = fullId;
-        } else if (!fullIDInApp.equals("")) {
-            unitID = fullIDInApp;
-        }
-
-        final InterstitialAd interstitialAd = new InterstitialAd(context);
-        interstitialAd.setAdUnitId(unitID);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        interstitialAd.loadAd(adRequest);
-        interstitialAd.setAdListener(new AdListener() {
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                dialogLoadAds.dismiss();
-                if (onAdInterstitialAdListener != null) {
-                    onAdInterstitialAdListener.doSomething();
-                }
+            String fullId = tinyDB.getString(AdsManager.ADMOB_FULL_SCREEN_ID);
+            String fullIDInApp = "";
+            try {
+                fullIDInApp = context.getResources().getString(R.string.abmob_full_id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String unitID = "";
+            if (!fullId.equals("")) {  // ưu tiên lấy id server trả về
+                unitID = fullId;
+            } else if (!fullIDInApp.equals("")) {
+                unitID = fullIDInApp;
             }
 
-            @Override
-            public void onAdLoaded() {
-                dialogLoadAds.dismiss();
+            final InterstitialAd interstitialAd = new InterstitialAd(context);
+            interstitialAd.setAdUnitId(unitID);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            interstitialAd.loadAd(adRequest);
+            interstitialAd.setAdListener(new AdListener() {
 
-                if (onAdInterstitialAdListener != null) {
-                    onAdInterstitialAdListener.doSomething();
+                @Override
+                public void onAdFailedToLoad(int i) {
+                    dialogLoadAds.dismiss();
+                    if (onAdInterstitialAdListener != null) {
+                        onAdInterstitialAdListener.doSomething();
+                    }
                 }
 
-                interstitialAd.show();
-            }
-        });
+                @Override
+                public void onAdLoaded() {
+                    dialogLoadAds.dismiss();
+
+                    if (onAdInterstitialAdListener != null) {
+                        onAdInterstitialAdListener.doSomething();
+                    }
+                    tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
+                    interstitialAd.show();
+                }
+            });
+        }
     }
 
     public void bannerAdmobSetup(final Context context, final BannerAdmobView bannerAdmobView, final String unitId) {

@@ -126,8 +126,8 @@ public class AdsManager {
 //        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times, listener);
 //    }
 
-    public void showAdmobFullScreen(Context context, AdMobManager.OnAdInterstitialAdListener onAdInterstitialAdListener) {
-        AdMobManager.getInstance().fullscreenAdmobShow(context, onAdInterstitialAdListener);
+    public void showAdmobFullScreen(Context context, final String key, int times, AdMobManager.OnAdInterstitialAdListener onAdInterstitialAdListener) {
+        AdMobManager.getInstance().fullscreenAdmobShow(context, key, times, onAdInterstitialAdListener);
     }
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {
