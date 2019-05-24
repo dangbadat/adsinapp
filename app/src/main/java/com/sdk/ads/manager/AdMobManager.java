@@ -209,7 +209,6 @@ public class AdMobManager {
                 @Override
                 public void onAdLoaded() {
                     dialogLoadAds.dismiss();
-                    tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
                     interstitialAd.show();
                     if (onAdInterstitialAdListener != null) {
                         onAdInterstitialAdListener.onOpen();
@@ -228,6 +227,7 @@ public class AdMobManager {
                 onAdInterstitialAdListener.onFailedToLoad();
             }
         }
+        tinyDB.putInt(TIMES_SHOW_FULL_ADMOB + "_" + key, count + 1);
     }
 
     public void bannerAdmobSetup(final Context context, final BannerAdmobView bannerAdmobView, final String unitId) {
