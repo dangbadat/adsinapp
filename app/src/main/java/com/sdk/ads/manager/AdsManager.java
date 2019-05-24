@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.IllformedLocaleException;
 import java.util.List;
 
 public class AdsManager {
@@ -52,7 +53,7 @@ public class AdsManager {
     private static AdsManager instance;
     private static Context context;
     private static TinyDB tinyDB;
-
+    private static boolean initAdmob;
 
     private AppInfo appMain;
     private ArrayList<AppInfo> appInfos = new ArrayList<>();
@@ -91,6 +92,7 @@ public class AdsManager {
     }
 
     public static void initAdmob(Context context) {
+        initAdmob = true;
         String admobId = tinyDB.getString(ADMOB_APP_ID);
 
 
@@ -102,7 +104,7 @@ public class AdsManager {
         }
 
         String appID = "";
-        if (!admobId.equals("")) {
+        if (!admobId.equals("")) { // ưu tiên lấy id server trả về
             appID = admobId;
         } else if (!admobIDInApp.equals("")) {
             appID = admobIDInApp;
@@ -120,8 +122,12 @@ public class AdsManager {
         return instance;
     }
 
-    public void showAdmobFullScreen(Context context, boolean showDialog, String messDialog, String key, int times, AdMobManager.OnAdInterstitialAdListener listener) {
-        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times, listener);
+//    public void showAdmobFullScreen(Context context, boolean showDialog, String messDialog, String key, int times, AdMobManager.OnAdInterstitialAdListener listener) {
+//        AdMobManager.getInstance().fullscreenAdmobShow(context, showDialog, messDialog, key, times, listener);
+//    }
+
+    public void showAdmobFullScreen(Context context, AdMobManager.OnAdInterstitialAdListener onAdInterstitialAdListener) {
+        AdMobManager.getInstance().fullscreenAdmobShow(context, onAdInterstitialAdListener);
     }
 
     public void setupBannerAdmob(Context context, BannerAdmobView bannerAdmobView) {
@@ -187,10 +193,12 @@ public class AdsManager {
 
 
     public void showAdsNativeDialog(Activity context, String key, int times) {
+
+
         if (MethodUtils.isNetworkConnected(context)) {
             timesNative = tinyDB.getInt(TIMES_SHOW_NATIVE + "_" + key, 0);
             boolean show = timesNative % (times + 1) == 0;
-            if (appNatives.size() > 0 && (times == 0 || show)) {
+            if (appNatives.size() > 0 && timesNative > 0 && (times == 0 || show)) {
                 NativeAds nativeAds = new NativeAds(context);
                 nativeAds.show();
             }
@@ -210,7 +218,7 @@ public class AdsManager {
         try {
             appInfos.clear();
             JSONObject object = new JSONObject(json);
-            JSONArray jsonArray = object.getJSONArray("Items");
+            JSONArray jsonArray = object.getJSONArray("ads_inapp");
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -238,6 +246,31 @@ public class AdsManager {
                 appInfos.add(appInfo);
             }
 
+            JSONObject fanMobJsonObject = object.getJSONObject("fan_mob");
+            try {
+                String admobId = fanMobJsonObject.getString("adm_appid");
+                tinyDB.putString(ADMOB_APP_ID, admobId);
+                Log.d("datdb", "admobId: " + admobId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                String admobFullScreen = fanMobJsonObject.getString("adm_full");
+                tinyDB.putString(ADMOB_FULL_SCREEN_ID, admobFullScreen);
+                Log.d("datdb", "admob full: " + admobFullScreen);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                String admobBanner = fanMobJsonObject.getString("adm_banner");
+                tinyDB.putString(ADMOB_BANNER_ID, admobBanner);
+                Log.d("datdb", "admob banner: " + admobBanner);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -252,6 +285,9 @@ public class AdsManager {
 
     public void parseDone() {
         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(ACTION_ADS_LOADED));
+        if (initAdmob && !AdMobManager.isInit) {
+            initAdmob(context);
+        }
     }
 
 
@@ -278,6 +314,7 @@ public class AdsManager {
             }
         } else {
             appRecommended.addAll(appInfos);
+            appRecommended.remove(0);
         }
 
         return appRecommended;
