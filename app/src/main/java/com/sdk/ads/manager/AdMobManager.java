@@ -231,7 +231,7 @@ public class AdMobManager {
     }
 
     public void bannerAdmobSetup(final Context context, final BannerAdmobView bannerAdmobView, final String unitId) {
-        Log.d("datdb", "bannerID: " + unitId);
+//        Log.d("datdb", "bannerID: " + unitId);
         if (!isInit) {
             bannerAdmobView.setVisibility(View.GONE);
             return;

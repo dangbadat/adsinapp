@@ -98,7 +98,7 @@ public class BannerAdsView extends ConstraintLayout {
     private BroadcastReceiver adsLoaded = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("datdb", "onReceive: banner");
+//            Log.d("datdb", "onReceive: banner");
             appInfos = AdsManager.getInstance().getAppBanners();
             setData();
         }
@@ -106,13 +106,13 @@ public class BannerAdsView extends ConstraintLayout {
 
     private void setData() {
         if (!MethodUtils.isNetworkConnected(context) || appInfos.size() == 0) {
-            Log.d("datdb", "ko dc");
+//            Log.d("datdb", "ko dc");
             setVisibility(GONE);
             handler.removeCallbacks(runnable);
         } else {
             setVisibility(VISIBLE);
             appInfo = appInfos.get(random.nextInt(appInfos.size()));
-            Log.d("datdb", "appInfo: " + appInfo.toString());
+//            Log.d("datdb", "appInfo: " + appInfo.toString());
             Glide.with(context).load(appInfo.getIcon()).into(iconApp);
             titleApp.setText(appInfo.getTitle());
             shortDesApp.setText(appInfo.getShort_des());

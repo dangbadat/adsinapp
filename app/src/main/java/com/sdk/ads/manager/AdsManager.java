@@ -250,7 +250,7 @@ public class AdsManager {
             try {
                 String admobId = fanMobJsonObject.getString("adm_appid");
                 tinyDB.putString(ADMOB_APP_ID, admobId);
-                Log.d("datdb", "admobId: " + admobId);
+//                Log.d("datdb", "admobId: " + admobId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -258,7 +258,7 @@ public class AdsManager {
             try {
                 String admobFullScreen = fanMobJsonObject.getString("adm_full");
                 tinyDB.putString(ADMOB_FULL_SCREEN_ID, admobFullScreen);
-                Log.d("datdb", "admob full: " + admobFullScreen);
+//                Log.d("datdb", "admob full: " + admobFullScreen);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -266,7 +266,7 @@ public class AdsManager {
             try {
                 String admobBanner = fanMobJsonObject.getString("adm_banner");
                 tinyDB.putString(ADMOB_BANNER_ID, admobBanner);
-                Log.d("datdb", "admob banner: " + admobBanner);
+//                Log.d("datdb", "admob banner: " + admobBanner);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -284,7 +284,7 @@ public class AdsManager {
     }
 
     public void parseDone() {
-        Log.d("datdb", "parseDone");
+//        Log.d("datdb", "parseDone");
         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(ACTION_ADS_LOADED));
         if (initAdmob && !AdMobManager.isInit) {
             initAdmob(context);

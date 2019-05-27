@@ -67,7 +67,7 @@ public class PushToServer extends AsyncTask<Void, Void, Boolean> {
 
         jsonString = response.toString();
 
-        Log.d("datdb", "json push: " + jsonString);
+//        Log.d("datdb", "json push: " + jsonString);
         try {
             JSONObject jsonResponse = new JSONObject(jsonString);
             String mess = jsonResponse.getString("message");
