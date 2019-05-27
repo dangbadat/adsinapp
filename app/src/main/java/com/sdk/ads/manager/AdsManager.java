@@ -284,6 +284,7 @@ public class AdsManager {
     }
 
     public void parseDone() {
+        Log.d("datdb", "parseDone");
         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(ACTION_ADS_LOADED));
         if (initAdmob && !AdMobManager.isInit) {
             initAdmob(context);

@@ -3,6 +3,7 @@ package com.sdk.ads.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.sdk.ads.manager.AdsManager;
 
@@ -66,6 +67,7 @@ public class PushToServer extends AsyncTask<Void, Void, Boolean> {
 
         jsonString = response.toString();
 
+        Log.d("datdb", "json push: " + jsonString);
         try {
             JSONObject jsonResponse = new JSONObject(jsonString);
             String mess = jsonResponse.getString("message");

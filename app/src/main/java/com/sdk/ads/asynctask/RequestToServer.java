@@ -14,7 +14,7 @@ import java.net.URL;
 public class RequestToServer extends AsyncTask<Void, Void, Boolean> {
 
     private Context context;
-    private String urlRequest = "https://0x612u1huh.execute-api.ap-southeast-1.amazonaws.com/apigetads/apigetads";
+    private String urlRequest = "https://hjg698vjqi.execute-api.ap-southeast-1.amazonaws.com/getmobfan/getads";
 
     public RequestToServer(Context context) {
         this.context = context;
