@@ -210,6 +210,10 @@ public class AdMobManager {
                 public void onAdLoaded() {
                     dialogLoadAds.dismiss();
                     interstitialAd.show();
+                }
+
+                @Override
+                public void onAdOpened() {
                     if (onAdInterstitialAdListener != null) {
                         onAdInterstitialAdListener.onOpen();
                     }
@@ -231,7 +235,6 @@ public class AdMobManager {
     }
 
     public void bannerAdmobSetup(final Context context, final BannerAdmobView bannerAdmobView, final String unitId) {
-//        Log.d("datdb", "bannerID: " + unitId);
         if (!isInit) {
             bannerAdmobView.setVisibility(View.GONE);
             return;
